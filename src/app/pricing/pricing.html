@@ -1,0 +1,89 @@
+<div class="container py-5">
+  <div class="pricing-shell mx-auto">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden pricing-card">
+      <div class="card-body p-4 p-lg-5">
+        <div class="mb-4">
+          <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-3 py-2 mb-3">
+            Fleet operations
+          </span>
+          <h1 class="display-6 fw-bold mb-0 text-dark">Fleet Pricing Calculator</h1>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold text-secondary">Truck Type</label>
+            <select class="form-select form-select-lg" [(ngModel)]="pricingRequest.truckType">
+              <option value="">Select Truck Type</option>
+              <option value="LIGHT_DUTY">Light Duty</option>
+              <option value="MEDIUM_DUTY">Medium Duty</option>
+              <option value="HEAVY_DUTY">Heavy Duty</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold text-secondary">Location</label>
+            <select class="form-select form-select-lg" name="location" [(ngModel)]="pricingRequest.location">
+              @for (location of availableLocations; track location) {
+                <option [value]="location === 'Select Location' ? '' : location">
+                  {{ location }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold text-secondary">Rental Days</label>
+            <input
+              class="form-control form-control-lg"
+              type="number"
+              [(ngModel)]="pricingRequest.rentalDays"
+              min="1"
+              placeholder="Enter rental days">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold text-secondary">Estimated Miles</label>
+            <input
+              class="form-control form-control-lg"
+              type="number"
+              [(ngModel)]="pricingRequest.estimatedMiles"
+              min="0"
+              placeholder="Enter estimated miles">
+          </div>
+        </div>
+
+        <div class="d-grid mt-4">
+          <button type="button" class="btn btn-primary btn-lg fw-semibold" (click)="calculateQuote()">
+            Calculate Quote
+          </button>
+        </div>
+
+        @if (errorMessage) {
+          <div class="alert alert-danger mt-4 mb-0" role="alert">
+            {{ errorMessage }}
+          </div>
+        }
+
+        @if (pricingResponse) {
+          <div class="quote-card mt-4 border-0 shadow-sm bg-light-subtle">
+            <h2 class="h4 fw-bold text-dark mb-3">Pricing Quote</h2>
+
+            <div class="row g-2 small text-secondary">
+              <div class="col-sm-6"><strong>Quote ID:</strong> {{ pricingResponse.quoteId }}</div>
+              <div class="col-sm-6"><strong>Base Price:</strong> {{ pricingResponse.basePrice }} {{ pricingResponse.currency }}</div>
+              <div class="col-sm-6"><strong>Mileage Charge:</strong> {{ pricingResponse.mileageCharge }} {{ pricingResponse.currency }}</div>
+              <div class="col-sm-6"><strong>Discount:</strong> {{ pricingResponse.discount }} {{ pricingResponse.currency }}</div>
+              <div class="col-sm-6"><strong>Tax:</strong> {{ pricingResponse.tax }} {{ pricingResponse.currency }}</div>
+            </div>
+
+            <hr class="my-3">
+
+            <h3 class="h3 mb-0 text-primary fw-bold">
+              Total: {{ pricingResponse.totalPrice }} {{ pricingResponse.currency }}
+            </h3>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
