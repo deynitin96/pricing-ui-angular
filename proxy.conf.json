@@ -1,11 +1,11 @@
 {
-  "/pricing-api": {
-    "target": "http://localhost:8082",
+  "/fleet-api": {
+    "target": "http://localhost:8081",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/pricing-api": ""
+      "^/fleet-api": ""
     }
   },
   "/truck-api": {
@@ -15,6 +15,15 @@
     "logLevel": "debug",
     "pathRewrite": {
       "^/truck-api": ""
+    }
+  },
+  "/pricing-api": {
+    "target": "http://localhost:8082",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/pricing-api": ""
     }
   }
 }
